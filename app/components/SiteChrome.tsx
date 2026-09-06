@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { ArrowUpRight } from '@phosphor-icons/react';
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -11,8 +12,8 @@ export function Header() {
   return (
     <header className="site-header">
       <Link className="brand" href="/" aria-label="12Grapes home">
-        <span className="brand-mark" aria-hidden="true"><b>12</b>G</span>
-        <span className="brand-name"><b>12Grapes</b><small>Vineyard Services</small></span>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img className="brand-logo" src="/12grapes-logo.png" alt="12Grapes Vineyard Services" />
       </Link>
       <button
         className="menu-toggle"
@@ -28,7 +29,7 @@ export function Header() {
         <Link href="/#ground-management" onClick={closeMenu}>Ground management</Link>
         <Link href="/about" onClick={closeMenu}>About</Link>
         <Link href="/#contact" onClick={closeMenu}>Contact</Link>
-        <Link className="nav-cta" href="/estimate" onClick={closeMenu}>Get a quote <span aria-hidden="true">↗</span></Link>
+        <Link className="nav-cta" href="/estimate" onClick={closeMenu}>Get a quote <ArrowUpRight size={16} weight="bold" /></Link>
       </nav>
     </header>
   );
@@ -40,8 +41,8 @@ export function Footer() {
       <div className="footer-inner">
         <div>
           <Link className="brand footer-brand" href="/">
-            <span className="brand-mark" aria-hidden="true"><b>12</b>G</span>
-            <span className="brand-name"><b>12Grapes</b><small>Vineyard Services</small></span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img className="brand-logo" src="/12grapes-logo.png" alt="12Grapes Vineyard Services" />
           </Link>
           <p>Practical vineyard support and specialist ground management for Gippsland growers.</p>
         </div>

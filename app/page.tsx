@@ -1,4 +1,5 @@
 import { Footer, Header } from './components/SiteChrome';
+import { ArrowDown, ArrowRight, ArrowUpRight } from '@phosphor-icons/react/ssr';
 
 const services = [
   { number: '01', title: 'Ground management', copy: 'Mechanical undervine mowing and cultivation with herbicide-free options.' },
@@ -16,29 +17,32 @@ export default function Home() {
         <Header />
         <section className="hero">
           <div className="hero-copy">
-            <p className="eyebrow"><span /> Gippsland, Victoria</p>
-            <h1>Specialist vineyard services.<br /><em>Built for Gippsland.</em></h1>
+            <p className="eyebrow">Vineyard services <span aria-hidden="true" /> Gippsland, Victoria</p>
+            <h1>Supporting Gippsland vineyards <em>all year round.</em></h1>
             <p className="hero-lede">
-              Practical vineyard support, specialist equipment and mechanical
-              undervine management, delivered by a local operator who knows the work.
+              Practical support, specialist machinery and herbicide-free options
+              for the work beneath every vine.
             </p>
             <div className="hero-actions">
-              <a className="button button-primary" href="#services">Explore services <span aria-hidden="true">↓</span></a>
-              <a className="button button-secondary" href="/estimate">Request a quote <span aria-hidden="true">↗</span></a>
+              <a className="button button-primary" href="#services">Explore our services <ArrowDown size={17} weight="bold" /></a>
+              <a className="hero-text-link" href="/estimate">Get an estimate <ArrowRight size={21} weight="regular" /></a>
             </div>
           </div>
 
-          <div className="vineyard-visual" role="img" aria-label="Vineyard tractor working between rows in warm afternoon light">
-            <div className="visual-label"><span>Purpose-built</span><strong>Vineyard machinery</strong></div>
+          <div className="hero-art" aria-label="A compact vineyard tractor with specialist undervine equipment in a Gippsland vineyard">
+            <div className="hero-photo" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              className="tractor-cutout"
+              src="/tractor-cutout.png"
+              alt="Green vineyard tractor fitted with dual-sided mechanical undervine equipment"
+            />
+            <div className="hero-equipment-note">
+              <span>Specialist equipment</span>
+              <strong>Mechanical undervine care</strong>
+            </div>
           </div>
-          <div className="hero-index" aria-hidden="true">12</div>
         </section>
-        <div className="service-ribbon" aria-label="Service highlights">
-          <p><span>01</span> Specialist equipment</p>
-          <p><span>02</span> Year-round support</p>
-          <p><span>03</span> Herbicide-free options</p>
-          <p><span>04</span> Gippsland based</p>
-        </div>
       </div>
 
       <section className="home-section services-section" id="services">
@@ -57,7 +61,7 @@ export default function Home() {
                 <h3>{service.title}</h3>
                 <p>{service.copy}</p>
               </div>
-              <a href="/estimate" aria-label={`Request a quote for ${service.title}`}><span aria-hidden="true">↗</span></a>
+              <a href="/estimate" aria-label={`Request a quote for ${service.title}`}><ArrowUpRight size={16} weight="bold" /></a>
             </article>
           ))}
         </div>
@@ -76,7 +80,7 @@ export default function Home() {
             <div><span>02</span><p>Weed, sucker and trash disruption</p></div>
             <div><span>03</span><p>Support for snail and weevil control</p></div>
           </div>
-          <a className="line-link" href="/estimate">Discuss your vineyard <span aria-hidden="true">↗</span></a>
+          <a className="line-link" href="/estimate">Discuss your vineyard <ArrowUpRight size={17} weight="bold" /></a>
         </div>
       </section>
 
@@ -99,7 +103,7 @@ export default function Home() {
           <p className="section-kicker">Why 12Grapes?</p>
           <h2>Twelve grapes.<br />Twelve months.</h2>
           <p>The name reflects a simple belief. A successful harvest starts with consistent care throughout the year.</p>
-          <a className="line-link line-link-dark" href="/about">Our story <span aria-hidden="true">→</span></a>
+          <a className="line-link line-link-dark" href="/about">Our story <ArrowRight size={18} weight="regular" /></a>
         </div>
       </section>
 
@@ -108,7 +112,7 @@ export default function Home() {
         <h2>Tell us what your vineyard needs.</h2>
         <p>Based in Gippsland and building a practical service around local growers.</p>
         <div className="contact-actions">
-          <a className="button button-primary" href="/estimate">Request a quote <span aria-hidden="true">↗</span></a>
+          <a className="button button-primary" href="/estimate">Request a quote <ArrowUpRight size={17} weight="bold" /></a>
           <a className="contact-phone" href="tel:0427551508">0427 551 508</a>
         </div>
       </section>
