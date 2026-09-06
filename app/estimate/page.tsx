@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Footer, Header } from '../components/SiteChrome';
 
 type ServiceKey = 'mowing' | 'cultivation' | 'tornado';
@@ -28,6 +28,12 @@ export default function EstimatePage() {
   const [location, setLocation] = useState('');
   const [prepared, setPrepared] = useState(false);
   const [copyStatus, setCopyStatus] = useState('');
+  const [formError, setFormError] = useState('');
+  const [serviceError, setServiceError] = useState('');
+  const servicePlanRef = useRef<HTMLDivElement>(null);
+  const nameRef = useRef<HTMLInputElement>(null);
+  const locationRef = useRef<HTMLInputElement>(null);
+  const preparedRef = useRef<HTMLElement>(null);
 
   const quick = useMemo(() => {
     const service = serviceData[quickService];
@@ -50,7 +56,38 @@ export default function EstimatePage() {
   const emailBody = mode === 'quick'
     ? `Hi Mat,\n\nI would like to register my interest in 12Grapes.\n\nName: ${name || 'Not provided'}\nVineyard location: ${location || 'Not provided'}\nArea: ${acres} acres\nService: ${serviceData[quickService].name}\nIndicative hours: ${quick.hours}\nIndicative price ex GST: ${money.format(quick.cost)}\n\nPlease contact me to discuss the property and service concept.`
     : `Hi Mat,\n\nI would like to register my interest in 12Grapes.\n\nName: ${name || 'Not provided'}\nVineyard location: ${location || 'Not provided'}\nArea: ${acres} acres\nServices:\n${details.lines.map((line) => `- ${line.name}: ${line.hours} hrs, ${money.format(line.cost)} ex GST`).join('\n')}\nOperator support: ${money.format(details.operatorCost)}\nWorker support: ${money.format(details.workerCost)}\nIndicative total ex GST: ${money.format(details.total)}\n\nPlease contact me to discuss the property and service concept.`;
-  const toggleService = (key: ServiceKey) => setSelected((current) => current.includes(key) ? current.filter((item) => item !== key) : [...current, key]);
+  const toggleService = (key: ServiceKey) => {
+    setServiceError('');
+    setSelected((current) => current.includes(key) ? current.filter((item) => item !== key) : [...current, key]);
+  };
+
+  useEffect(() => {
+    if (!prepared) return;
+    preparedRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    preparedRef.current?.focus({ preventScroll: true });
+  }, [prepared]);
+
+  const prepareEnquiry = () => {
+    if (mode === 'detailed' && selected.length === 0) {
+      setServiceError('Choose at least one service before preparing your enquiry.');
+      setFormError('');
+      servicePlanRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    if (!name.trim() || !location.trim()) {
+      setServiceError('');
+      setFormError('Add your name and vineyard location before preparing your enquiry.');
+      const missingField = !name.trim() ? nameRef.current : locationRef.current;
+      missingField?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      missingField?.focus({ preventScroll: true });
+      return;
+    }
+
+    setServiceError('');
+    setFormError('');
+    setPrepared(true);
+  };
 
   const copyEnquiry = async () => {
     try {
@@ -72,9 +109,9 @@ export default function EstimatePage() {
 
       <section className="calculator-shell">
         <div className="calculator-main">
-          <div className="mode-switch" aria-label="Estimate type">
-            <button className={mode === 'quick' ? 'active' : ''} onClick={() => setMode('quick')}>Quick estimate</button>
-            <button className={mode === 'detailed' ? 'active' : ''} onClick={() => setMode('detailed')}>Detailed estimate</button>
+          <div className="mode-switch" role="group" aria-label="Estimate type">
+            <button type="button" aria-pressed={mode === 'quick'} className={mode === 'quick' ? 'active' : ''} onClick={() => setMode('quick')}>Quick estimate</button>
+            <button type="button" aria-pressed={mode === 'detailed'} className={mode === 'detailed' ? 'active' : ''} onClick={() => setMode('detailed')}>Detailed estimate</button>
           </div>
 
           <div className="field-block">
@@ -87,18 +124,18 @@ export default function EstimatePage() {
           {mode === 'quick' ? (
             <div className="field-block">
               <div className="field-heading"><div><span className="step-badge">2</span><h2>Choose one service</h2></div></div>
-              <div className="option-grid">
+              <div className="option-grid" role="group" aria-label="Vineyard service">
                 {(Object.keys(serviceData) as ServiceKey[]).map((key) => {
                   const item = serviceData[key];
-                  return <button key={key} className={`option-card ${quickService === key ? 'selected' : ''}`} onClick={() => setQuickService(key)}><span className="radio-dot" /><strong>{item.name}</strong><span>{money.format(item.rate)}/hr</span><small>{item.note}</small></button>;
+                  return <button type="button" aria-pressed={quickService === key} key={key} className={`option-card ${quickService === key ? 'selected' : ''}`} onClick={() => setQuickService(key)}><span className="radio-dot" /><strong>{item.name}</strong><span>{money.format(item.rate)}/hr</span><small>{item.note}</small></button>;
                 })}
               </div>
             </div>
           ) : (
             <>
-              <div className="field-block">
+              <div className="field-block" ref={servicePlanRef}>
                 <div className="field-heading"><div><span className="step-badge">2</span><h2>Build the service plan</h2></div></div>
-                <div className="detailed-services">
+                <div className="detailed-services" role="group" aria-label="Selected vineyard services" aria-describedby={serviceError ? 'estimate-service-error' : undefined}>
                   {(Object.keys(serviceData) as ServiceKey[]).map((key) => {
                     const item = serviceData[key];
                     const checked = selected.includes(key);
@@ -108,6 +145,7 @@ export default function EstimatePage() {
                     </div>;
                   })}
                 </div>
+                {serviceError && <p className="form-error" id="estimate-service-error" role="alert">{serviceError}</p>}
               </div>
               <div className="field-block">
                 <div className="field-heading"><div><span className="step-badge">3</span><h2>Optional labour support</h2></div></div>
@@ -123,7 +161,8 @@ export default function EstimatePage() {
 
           <div className="field-block contact-fields" id="interest-details">
             <div className="field-heading"><div><span className="step-badge">{mode === 'quick' ? 3 : 4}</span><h2>Add your details</h2></div></div>
-            <div className="contact-grid"><label>Your name<input value={name} onChange={(event) => setName(event.target.value)} placeholder="Name" /></label><label>Vineyard location<input value={location} onChange={(event) => setLocation(event.target.value)} placeholder="Town or region" /></label></div>
+            <div className="contact-grid"><label>Your name<input ref={nameRef} required autoComplete="name" aria-invalid={Boolean(formError) && !name.trim()} aria-describedby={formError ? 'estimate-form-error' : undefined} value={name} onChange={(event) => { setName(event.target.value); setFormError(''); }} placeholder="Name" /></label><label>Vineyard location<input ref={locationRef} required autoComplete="address-level2" aria-invalid={Boolean(formError) && !location.trim()} aria-describedby={formError ? 'estimate-form-error' : undefined} value={location} onChange={(event) => { setLocation(event.target.value); setFormError(''); }} placeholder="Town or region" /></label></div>
+            {formError && <p className="form-error" id="estimate-form-error" role="alert">{formError}</p>}
           </div>
         </div>
 
@@ -137,16 +176,16 @@ export default function EstimatePage() {
               {details.workerCost > 0 && <div><span>Worker support</span><strong>{money.format(details.workerCost)}</strong></div>}
             </>}
           </div>
-          <button type="button" className="button button-cream summary-button" onClick={() => setPrepared(true)}>Prepare expression of interest <span aria-hidden="true">↗</span></button>
+          <button type="button" className="button button-cream summary-button" onClick={prepareEnquiry}>Prepare expression of interest <span aria-hidden="true">↗</span></button>
           <p className="summary-note">This is a mock estimate, not a quote. Final timing and pricing will depend on vineyard layout, terrain, vine age, weed load, turning time and seasonal conditions.</p>
         </aside>
       </section>
 
       {prepared && (
-        <section className="prepared-enquiry" aria-live="polite">
+        <section className="prepared-enquiry" ref={preparedRef} tabIndex={-1} aria-live="polite" aria-labelledby="prepared-enquiry-title">
           <div>
             <p className="eyebrow">Ready to send</p>
-            <h2>Your expression of interest is prepared.</h2>
+            <h2 id="prepared-enquiry-title">Your expression of interest is prepared.</h2>
             <p>Copy the text below into an email addressed to <strong>matmahlook@gmail.com</strong>.</p>
           </div>
           <div>
