@@ -1,17 +1,15 @@
-import Link from 'next/link';
-
 export function Header() {
   return (
     <header className="site-header">
-      <Link className="brand" href="/" aria-label="12Grapes home">
+      <a className="brand" href="/" aria-label="12Grapes home">
         <span className="brand-mark" aria-hidden="true">12</span>
         <span>Grapes</span>
-      </Link>
+      </a>
       <nav aria-label="Main navigation">
-        <Link href="/">Home</Link>
-        <Link href="/about">About</Link>
-        <Link href="/estimate">Estimate</Link>
-        <a className="nav-cta" href="mailto:matmahlook@gmail.com">Register interest</a>
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="/estimate">Estimate</a>
+        <a className="nav-cta" href="/estimate#interest-details">Register interest</a>
       </nav>
     </header>
   );
@@ -22,17 +20,17 @@ export function Footer() {
     <footer className="footer">
       <div className="footer-inner">
         <div>
-          <Link className="brand footer-brand" href="/">
+          <a className="brand footer-brand" href="/">
             <span className="brand-mark" aria-hidden="true">12</span>
             <span>Grapes</span>
-          </Link>
+          </a>
           <p>Proposed vineyard services for Gippsland growers.</p>
         </div>
         <div className="footer-links">
-          <Link href="/about">About</Link>
-          <Link href="/estimate">Estimate</Link>
+          <a href="/about">About</a>
+          <a href="/estimate">Estimate</a>
           <a href="tel:0427551508">0427 551 508</a>
-          <a href="mailto:matmahlook@gmail.com">matmahlook@gmail.com</a>
+          <span>matmahlook@gmail.com</span>
         </div>
       </div>
       <div className="footer-bottom">
@@ -42,4 +40,3 @@ export function Footer() {
     </footer>
   );
 }
-

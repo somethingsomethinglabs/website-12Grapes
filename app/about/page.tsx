@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { Footer, Header } from '../components/SiteChrome';
 
 export const metadata: Metadata = {
@@ -55,11 +54,10 @@ export default function AboutPage() {
           <p className="eyebrow">Locally focused</p>
           <h2>Designed for Gippsland vineyards.</h2>
           <p>The expression-of-interest stage is about listening first. Vineyard layout, timing, terrain and weed pressure all change how the work needs to happen. Grower feedback will help shape a service that fits local conditions.</p>
-          <Link className="button button-primary" href="/estimate">Estimate your property</Link>
+          <a className="button button-primary" href="/estimate">Estimate your property</a>
         </div>
       </section>
       <Footer />
     </main>
   );
 }
-

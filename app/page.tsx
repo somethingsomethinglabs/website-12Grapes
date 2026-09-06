@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { Footer, Header } from './components/SiteChrome';
 
 const services = [
@@ -29,8 +28,8 @@ export default function Home() {
             service for Gippsland vineyards. Help shape what comes next.
           </p>
           <div className="hero-actions">
-            <Link className="button button-primary" href="/estimate">Estimate your vineyard <span aria-hidden="true">↗</span></Link>
-            <a className="button button-secondary" href="mailto:matmahlook@gmail.com">Register interest</a>
+            <a className="button button-primary" href="/estimate">Estimate your vineyard <span aria-hidden="true">↗</span></a>
+            <a className="button button-secondary" href="/estimate#interest-details">Register interest</a>
           </div>
           <p className="microcopy">Indicative pricing only · Two-hour minimum · Prices exclude GST</p>
         </div>
@@ -80,7 +79,7 @@ export default function Home() {
           <ul className="benefit-list">
             {benefits.map((benefit) => <li key={benefit}><span aria-hidden="true">✓</span>{benefit}</li>)}
           </ul>
-          <Link className="text-link" href="/about">Read about the 12Grapes approach <span aria-hidden="true">→</span></Link>
+          <a className="text-link" href="/about">Read about the 12Grapes approach <span aria-hidden="true">→</span></a>
         </div>
       </section>
 
@@ -91,11 +90,10 @@ export default function Home() {
         </div>
         <div>
           <p>Start with a five-acre example, adjust the services, then email the estimate to Mat as an expression of interest.</p>
-          <Link className="button button-cream" href="/estimate">Build an estimate <span aria-hidden="true">↗</span></Link>
+          <a className="button button-cream" href="/estimate">Build an estimate <span aria-hidden="true">↗</span></a>
         </div>
       </section>
       <Footer />
     </main>
   );
 }
-

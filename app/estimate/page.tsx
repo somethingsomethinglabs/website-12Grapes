@@ -26,6 +26,8 @@ export default function EstimatePage() {
   const [workerHours, setWorkerHours] = useState(0);
   const [name, setName] = useState('');
   const [location, setLocation] = useState('');
+  const [prepared, setPrepared] = useState(false);
+  const [copyStatus, setCopyStatus] = useState('');
 
   const quick = useMemo(() => {
     const service = serviceData[quickService];
@@ -48,9 +50,16 @@ export default function EstimatePage() {
   const emailBody = mode === 'quick'
     ? `Hi Mat,\n\nI would like to register my interest in 12Grapes.\n\nName: ${name || 'Not provided'}\nVineyard location: ${location || 'Not provided'}\nArea: ${acres} acres\nService: ${serviceData[quickService].name}\nIndicative hours: ${quick.hours}\nIndicative price ex GST: ${money.format(quick.cost)}\n\nPlease contact me to discuss the property and service concept.`
     : `Hi Mat,\n\nI would like to register my interest in 12Grapes.\n\nName: ${name || 'Not provided'}\nVineyard location: ${location || 'Not provided'}\nArea: ${acres} acres\nServices:\n${details.lines.map((line) => `- ${line.name}: ${line.hours} hrs, ${money.format(line.cost)} ex GST`).join('\n')}\nOperator support: ${money.format(details.operatorCost)}\nWorker support: ${money.format(details.workerCost)}\nIndicative total ex GST: ${money.format(details.total)}\n\nPlease contact me to discuss the property and service concept.`;
-  const emailHref = `mailto:matmahlook@gmail.com?subject=${encodeURIComponent('12Grapes expression of interest')}&body=${encodeURIComponent(emailBody)}`;
-
   const toggleService = (key: ServiceKey) => setSelected((current) => current.includes(key) ? current.filter((item) => item !== key) : [...current, key]);
+
+  const copyEnquiry = async () => {
+    try {
+      await navigator.clipboard.writeText(emailBody);
+      setCopyStatus('Copied. Paste it into an email to Mat.');
+    } catch {
+      setCopyStatus('Select the enquiry text and copy it manually.');
+    }
+  };
 
   return (
     <main>
@@ -112,7 +121,7 @@ export default function EstimatePage() {
             </>
           )}
 
-          <div className="field-block contact-fields">
+          <div className="field-block contact-fields" id="interest-details">
             <div className="field-heading"><div><span className="step-badge">{mode === 'quick' ? 3 : 4}</span><h2>Add your details</h2></div></div>
             <div className="contact-grid"><label>Your name<input value={name} onChange={(event) => setName(event.target.value)} placeholder="Name" /></label><label>Vineyard location<input value={location} onChange={(event) => setLocation(event.target.value)} placeholder="Town or region" /></label></div>
           </div>
@@ -128,10 +137,25 @@ export default function EstimatePage() {
               {details.workerCost > 0 && <div><span>Worker support</span><strong>{money.format(details.workerCost)}</strong></div>}
             </>}
           </div>
-          <a className="button button-cream summary-button" href={emailHref}>Email this expression of interest <span aria-hidden="true">↗</span></a>
+          <button type="button" className="button button-cream summary-button" onClick={() => setPrepared(true)}>Prepare expression of interest <span aria-hidden="true">↗</span></button>
           <p className="summary-note">This is a mock estimate, not a quote. Final timing and pricing will depend on vineyard layout, terrain, vine age, weed load, turning time and seasonal conditions.</p>
         </aside>
       </section>
+
+      {prepared && (
+        <section className="prepared-enquiry" aria-live="polite">
+          <div>
+            <p className="eyebrow">Ready to send</p>
+            <h2>Your expression of interest is prepared.</h2>
+            <p>Copy the text below into an email addressed to <strong>matmahlook@gmail.com</strong>.</p>
+          </div>
+          <div>
+            <textarea aria-label="Prepared expression of interest" readOnly value={emailBody} />
+            <button type="button" className="button button-primary" onClick={copyEnquiry}>Copy enquiry text</button>
+            {copyStatus && <p className="copy-status">{copyStatus}</p>}
+          </div>
+        </section>
+      )}
 
       <section className="assumptions-section">
         <p className="eyebrow">How this estimate works</p>
@@ -146,4 +170,3 @@ export default function EstimatePage() {
     </main>
   );
 }
-
