@@ -11,17 +11,17 @@ export const metadata: Metadata = {
     default: '12Grapes Vineyard Services | Gippsland',
     template: '%s | 12Grapes',
   },
-  description: 'Register your interest in proposed herbicide-free vineyard ground management across Gippsland.',
+  description: 'Practical vineyard services, specialist equipment and mechanical undervine management for Gippsland growers.',
   openGraph: {
     title: '12Grapes Vineyard Services',
-    description: 'Herbicide-free vineyard care for Gippsland growers.',
+    description: 'Supporting Gippsland vineyards all year round.',
     type: 'website',
     images: [{ url: '/og.png', width: 1536, height: 1024, alt: '12Grapes herbicide-free vineyard care in Gippsland' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: '12Grapes Vineyard Services',
-    description: 'Herbicide-free vineyard care for Gippsland growers.',
+    description: 'Supporting Gippsland vineyards all year round.',
     images: ['/og.png'],
   },
 };
