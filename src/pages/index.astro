@@ -20,8 +20,8 @@ const enquiryHref = (service: string) => `mailto:matmahlook@gmail.com?subject=${
 <BaseLayout>
   <main>
     <div class="hero-shell">
-      <Header currentPath={Astro.url.pathname} base={base} client:load />
-      <section class="hero">
+      <Header base={base} client:load />
+      <section class="hero" id="main-content" tabindex="-1">
         <div class="hero-copy">
           <p class="eyebrow">Vineyard services <span aria-hidden="true"></span> Gippsland, Victoria</p>
           <h1>Supporting Gippsland vineyards <em>all year round.</em></h1>
@@ -30,12 +30,12 @@ const enquiryHref = (service: string) => `mailto:matmahlook@gmail.com?subject=${
             for the work beneath every vine.
           </p>
           <div class="hero-actions">
-            <a class="button button-primary" href="#services">Explore our services <ArrowDown size={17} weight="bold" /></a>
-            <a class="hero-text-link" href="#estimate" data-estimate-open>Ground-management estimate <ArrowRight size={21} weight="regular" /></a>
+            <a class="button button-primary" href="#services">Explore our services <ArrowDown size={17} weight="bold" aria-hidden="true" /></a>
+            <a class="hero-text-link" href="#estimate" data-estimate-open>Ground-management estimate <ArrowRight size={21} weight="regular" aria-hidden="true" /></a>
           </div>
         </div>
 
-        <div class="hero-art" aria-label="A compact vineyard tractor with specialist undervine equipment in a Gippsland vineyard">
+        <div class="hero-art">
           <div class="hero-photo"></div>
           <img
             class="tractor-cutout"
@@ -56,7 +56,7 @@ const enquiryHref = (service: string) => `mailto:matmahlook@gmail.com?subject=${
           <p class="section-kicker">Vineyard services</p>
           <h2>Support for every season.</h2>
         </div>
-        <p>From establishment through harvest, 12Grapes provides practical vineyard support across Gippsland.</p>
+        <p>Ground management is the starting point, backed by practical vineyard support from establishment through harvest.</p>
       </header>
       <div class="home-service-grid">
         {services.map((service) => (
@@ -82,48 +82,48 @@ const enquiryHref = (service: string) => `mailto:matmahlook@gmail.com?subject=${
         <p class="section-kicker section-kicker-light">Specialist ground management</p>
         <h2>Control weeds.<br />Keep herbicide out.</h2>
         <p class="ground-lede">A purpose-built, dual-sided system works beneath both sides of the row in one pass. It gives growers a practical mechanical option for cleaner undervine strips.</p>
-        <div class="ground-points">
-          <div><span>01</span><p>Undervine mowing and cultivation</p></div>
-          <div><span>02</span><p>Weed, sucker and trash disruption</p></div>
-          <div><span>03</span><p>Support for snail and weevil control</p></div>
+        <div class="ground-points" role="list" aria-label="Ground-management capabilities">
+          <div role="listitem"><span>01</span><p>Undervine mowing and cultivation</p></div>
+          <div role="listitem"><span>02</span><p>Weed, sucker and trash disruption</p></div>
+          <div role="listitem"><span>03</span><p>Support for snail and weevil control</p></div>
         </div>
-        <a class="line-link" href="#estimate" data-estimate-open data-estimate-service="weeding">Get a ground-management estimate <ArrowUpRight size={17} weight="bold" /></a>
+        <a class="line-link" href="#estimate" data-estimate-open data-estimate-service="weeding">Get a ground-management estimate <ArrowUpRight size={17} weight="bold" aria-hidden="true" /></a>
       </div>
     </section>
 
-    <section class="equipment-section" aria-label="Specialist equipment">
+    <section class="equipment-section" aria-labelledby="equipment-heading">
       <div class="equipment-intro">
         <p class="section-kicker">Specialist equipment</p>
-        <h2>Built for the row.</h2>
+        <h2 id="equipment-heading">Built for the row.</h2>
         <p>A compact vineyard tractor and front-mounted system are selected for precision, visibility and efficient work in tight vineyard conditions.</p>
       </div>
-      <div class="equipment-stats">
-        <article><strong>Dual-sided</strong><span>Two undervine strips in one pass</span></article>
-        <article><strong>Front-mounted</strong><span>Clear visibility around every vine</span></article>
-        <article><strong>Multi-task ready</strong><span>Make more of each pass where practical</span></article>
+      <div class="equipment-stats" role="list" aria-label="Equipment features">
+        <article role="listitem"><strong>Dual-sided</strong><span>Two undervine strips in one pass</span></article>
+        <article role="listitem"><strong>Front-mounted</strong><span>Clear visibility around every vine</span></article>
+        <article role="listitem"><strong>Multi-task ready</strong><span>Make more of each pass where practical</span></article>
       </div>
     </section>
 
-    <section class="why-section">
-      <div class="why-mark" aria-hidden="true">12</div>
+    <section class="why-section" id="about">
+      <div class="why-mark" aria-hidden="true"></div>
       <div class="why-copy">
         <p class="section-kicker">Why 12Grapes?</p>
         <h2>Twelve grapes.<br />Twelve months.</h2>
-        <p>The name reflects a simple belief. A successful harvest starts with consistent care throughout the year.</p>
-        <a class="line-link line-link-dark" href={`${base}about/`}>Our story <ArrowRight size={18} weight="regular" /></a>
+        <p>The name comes from the tradition of twelve grapes of prosperity, one for each month of the year. For 12Grapes, it is a reminder that strong vineyards come from steady work through every season.</p>
+        <p>That thinking shapes the service around reliable support, careful timing and attention to the details that affect vine health and fruit quality.</p>
       </div>
     </section>
 
     <section class="contact-section" id="contact">
       <p class="section-kicker section-kicker-light">Work with 12Grapes</p>
       <h2>Tell us what your vineyard needs.</h2>
-      <p>Based in Gippsland and building a practical service around local growers.</p>
+      <p>Based in Gippsland, 12Grapes is being shaped with local growers. Vineyard layout, timing, terrain and weed pressure all change how the work needs to happen, so each job starts with listening to the block.</p>
       <div class="contact-actions">
-        <a class="button button-primary" href={enquiryHref('vineyard services')}>Email Mat about your vineyard <ArrowUpRight size={17} weight="bold" /></a>
+        <a class="button button-primary" href={enquiryHref('vineyard services')}>Email Mat about your vineyard <ArrowUpRight size={17} weight="bold" aria-hidden="true" /></a>
         <a class="contact-phone" href="tel:0427551508">0427 551 508</a>
       </div>
     </section>
-    <Footer currentPath={Astro.url.pathname} base={base} />
-    <ServiceDetails client:load />
   </main>
+  <Footer base={base} />
+  <ServiceDetails client:load />
 </BaseLayout>

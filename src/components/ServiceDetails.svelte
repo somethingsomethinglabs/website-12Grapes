@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { flushSync, onMount } from 'svelte';
 
   type ServiceKey =
     | 'ground-management'
@@ -78,7 +78,7 @@
       if (!trigger || !requestedService || !(requestedService in services)) return;
 
       event.preventDefault();
-      selectedKey = requestedService as ServiceKey;
+      flushSync(() => (selectedKey = requestedService as ServiceKey));
       opener = trigger;
       if (!dialog.open) dialog.showModal();
       document.body.classList.add('service-modal-open');
@@ -94,17 +94,23 @@
 
   function closeModal() {
     dialog.close();
+    handleDialogClose();
   }
 
   function openCalculator() {
     opener = null;
     dialog.close();
+    handleDialogClose();
   }
 
   function handleDialogClose() {
     document.body.classList.remove('service-modal-open');
     opener?.focus();
     opener = null;
+  }
+
+  function handleDialogCancel() {
+    setTimeout(handleDialogClose);
   }
 
   function handleBackdropClick(event: MouseEvent) {
@@ -116,7 +122,9 @@
   bind:this={dialog}
   class="service-modal"
   aria-labelledby="service-modal-title"
+  aria-describedby="service-modal-intro service-modal-description"
   onclose={handleDialogClose}
+  oncancel={handleDialogCancel}
   onclick={handleBackdropClick}
 >
   <article class="service-modal-panel">
@@ -129,8 +137,8 @@
     </header>
 
     <div class="service-modal-body">
-      <p class="service-modal-intro">{service.intro}</p>
-      <p class="service-modal-copy">{service.details}</p>
+      <p class="service-modal-intro" id="service-modal-intro">{service.intro}</p>
+      <p class="service-modal-copy" id="service-modal-description">{service.details}</p>
 
       <section class="service-modal-includes" aria-labelledby="service-includes-title">
         <h3 id="service-includes-title">How we can help</h3>
@@ -149,6 +157,7 @@
         href="#estimate"
         data-estimate-open
         data-estimate-service={service.estimateService ?? 'mowing'}
+        data-estimate-return-service={selectedKey}
         onclick={openCalculator}
       >
         Open the calculator <span aria-hidden="true">→</span>

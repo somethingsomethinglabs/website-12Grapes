@@ -1,11 +1,9 @@
 ---
 interface Props {
-  currentPath: string;
   base: string;
 }
 
-const { currentPath, base } = Astro.props;
-const isAbout = currentPath.replace(/\/$/, '') === `${base}about`.replace(/\/$/, '');
+const { base } = Astro.props;
 ---
 
 <footer class="footer" id="footer">
@@ -20,10 +18,10 @@ const isAbout = currentPath.replace(/\/$/, '') === `${base}about`.replace(/\/$/,
       </a>
       <p>Practical vineyard support and specialist ground management for Gippsland growers.</p>
     </div>
-    <div class="footer-links">
+    <div class="footer-links" role="navigation" aria-label="Footer">
       <a href={`${base}#services`}>Services</a>
       <a href={`${base}#ground-management`}>Ground management</a>
-      <a href={`${base}about/`} aria-current={isAbout ? 'page' : undefined}>About 12Grapes</a>
+      <a href={`${base}#about`}>About 12Grapes</a>
       <a href="#estimate" data-estimate-open>Ground-management estimate</a>
       <a href="tel:0427551508">0427 551 508</a>
       <a href="mailto:matmahlook@gmail.com">matmahlook@gmail.com</a>

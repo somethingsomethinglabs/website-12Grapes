@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { flushSync, onMount } from 'svelte';
   import { estimateCostRange } from '../lib/calculations';
 
   type ServiceKey = 'mowing' | 'weeding';
@@ -55,10 +55,15 @@
       if (!trigger) return;
 
       event.preventDefault();
-      opener = trigger;
+      const returnService = trigger.dataset.estimateReturnService;
+      opener = returnService
+        ? document.querySelector<HTMLElement>(`[data-service-open="${returnService}"]`) ?? trigger
+        : trigger;
 
       const requestedService = trigger.dataset.estimateService;
-      if (requestedService === 'mowing' || requestedService === 'weeding') service = requestedService;
+      if (requestedService === 'mowing' || requestedService === 'weeding') {
+        flushSync(() => (service = requestedService));
+      }
 
       if (!dialog.open) dialog.showModal();
       document.body.classList.add('modal-open');
@@ -79,6 +84,7 @@
 
   function closeModal() {
     dialog.close();
+    handleDialogClose();
   }
 
   function handleDialogClose() {
@@ -88,6 +94,10 @@
     }
     opener?.focus();
     opener = null;
+  }
+
+  function handleDialogCancel() {
+    setTimeout(handleDialogClose);
   }
 
   function handleBackdropClick(event: MouseEvent) {
@@ -100,7 +110,9 @@
   class="estimate-modal"
   id="estimate"
   aria-labelledby="estimate-modal-title"
+  aria-describedby="estimate-modal-description"
   onclose={handleDialogClose}
+  oncancel={handleDialogCancel}
   onclick={handleBackdropClick}
 >
   <div class="estimate-modal-panel">
@@ -108,7 +120,7 @@
       <div>
         <p class="eyebrow">Ground-management estimate</p>
         <h2 id="estimate-modal-title">Get a quick planning range.</h2>
-        <p>Choose the vineyard area and work needed. Mat will work out the machinery, crew and number of passes with you.</p>
+        <p id="estimate-modal-description">Choose the vineyard area and work needed. Mat will work out the machinery, crew and number of passes with you.</p>
       </div>
       <button class="modal-close" type="button" aria-label="Close estimate" onclick={closeModal}>×</button>
     </header>
@@ -176,7 +188,7 @@
           <strong>{estimateLabel}</strong>
           <small>excluding GST</small>
         </div>
-        <p class="summary-selection">{acreageLabel}<span aria-hidden="true">·</span>{serviceData[service].name}</p>
+        <p class="summary-selection">{acreageLabel} <span aria-hidden="true">·</span> {serviceData[service].name}</p>
         <a class="button button-cream summary-button" href={mailtoHref}>Email Mat to confirm <span aria-hidden="true">↗</span></a>
         <p class="summary-note">This is a planning guide based on current proposed rates and a two-hour minimum. Access, row spacing, weed load, travel and seasonal conditions can change the final price.</p>
       </aside>

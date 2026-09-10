@@ -21,10 +21,10 @@ const socialImage = new URL(`${base}og.png`, Astro.site);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en-AU">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
@@ -46,7 +46,29 @@ const socialImage = new URL(`${base}og.png`, Astro.site);
     <meta name="twitter:image" content={socialImage} />
   </head>
   <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
     <slot />
     <Estimator client:load />
   </body>
 </html>
+
+<style is:global>
+  .skip-link {
+    position: fixed;
+    z-index: 1000;
+    top: 12px;
+    left: 12px;
+    padding: 12px 16px;
+    transform: translateY(calc(-100% - 24px));
+    background: #fff;
+    color: #0b1a15;
+    font-weight: 700;
+    text-decoration: underline;
+  }
+
+  .skip-link:focus {
+    transform: translateY(0);
+    outline: 3px solid #9d3547;
+    outline-offset: 3px;
+  }
+</style>
