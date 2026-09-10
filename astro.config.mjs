@@ -6,7 +6,7 @@ const githubPages = process.env.GITHUB_PAGES === 'true';
 
 export default defineConfig({
   site: githubPages
-    ? 'https://somethingsomethinglabs.github.io/website-12Grapes'
+    ? 'https://somethingsomethinglabs.com'
     : 'https://twelve-grapes-gippsland-eoi.rowanjpaterson.chatgpt.site',
   base: githubPages ? '/website-12Grapes' : '/',
   output: 'static',
