@@ -5,7 +5,7 @@ import {
   hoursFor,
   isNumberWithinRules,
   normalizeNumber,
-} from '../app/estimate/calculations.ts';
+} from '../src/lib/calculations.ts';
 
 const acreageRules = { min: 0.25, max: 100, emptyValue: 5 };
 const passRules = { min: 1, max: 6, integer: true, emptyValue: 1 };
