@@ -1,9 +1,10 @@
 <script lang="ts">
   interface Props {
     currentPath: string;
+    base: string;
   }
 
-  let { currentPath }: Props = $props();
+  let { currentPath, base }: Props = $props();
   let menuOpen = $state(false);
   let menuButton: HTMLButtonElement;
   let navigation: HTMLElement;
@@ -42,8 +43,8 @@
 <svelte:window onkeydown={handleKeydown} />
 
 <header class="site-header">
-  <a class="brand" href="/" aria-label="12Grapes home">
-    <img class="brand-logo" src="/12grapes-logo.png" alt="12Grapes Vineyard Services" />
+  <a class="brand" href={base} aria-label="12Grapes home">
+    <img class="brand-logo" src={`${base}12grapes-logo.png`} alt="12Grapes Vineyard Services" />
   </a>
   <button
     bind:this={menuButton}
@@ -62,10 +63,10 @@
     aria-label="Main navigation"
     class:nav-open={menuOpen}
   >
-    <a href="/#services" onclick={closeMenu}>Services</a>
-    <a href="/#ground-management" onclick={closeMenu}>Ground management</a>
-    <a href="/about" aria-current={currentPath === '/about' ? 'page' : undefined} onclick={closeMenu}>About</a>
-    <a href="/#contact" onclick={closeMenu}>Contact</a>
+    <a href={`${base}#services`} onclick={closeMenu}>Services</a>
+    <a href={`${base}#ground-management`} onclick={closeMenu}>Ground management</a>
+    <a href={`${base}about/`} aria-current={currentPath.replace(/\/$/, '') === `${base}about`.replace(/\/$/, '') ? 'page' : undefined} onclick={closeMenu}>About</a>
+    <a href={`${base}#contact`} onclick={closeMenu}>Contact</a>
     <a class="nav-cta" href="#estimate" data-estimate-open onclick={closeMenu}>
       Get a quote <span aria-hidden="true">↗</span>
     </a>

@@ -15,8 +15,9 @@ const {
   title = '12Grapes Vineyard Services | Gippsland',
   description = 'Practical vineyard services, specialist equipment and mechanical undervine management for Gippsland growers.',
 } = Astro.props;
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const socialImage = new URL('/og.png', Astro.site);
+const socialImage = new URL(`${base}og.png`, Astro.site);
 ---
 
 <!doctype html>
@@ -27,7 +28,7 @@ const socialImage = new URL('/og.png', Astro.site);
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <link rel="icon" href="/12grapes-logo.png" />
+    <link rel="icon" href={`${base}12grapes-logo.png`} />
     <title>{title}</title>
 
     <meta property="og:type" content="website" />

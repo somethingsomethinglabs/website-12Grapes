@@ -8,6 +8,7 @@ const serviceGroups = [
   ['Grow', 'Pruning and training', 'Canopy management', 'Pest and disease monitoring'],
   ['Harvest', 'Crop estimation', 'Yield management', 'Harvest coordination'],
 ];
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 ---
 
 <BaseLayout
@@ -15,7 +16,7 @@ const serviceGroups = [
   description="The story, proposed services and year-round vineyard approach behind 12Grapes in Gippsland."
 >
   <main>
-    <Header currentPath={Astro.url.pathname} client:load />
+    <Header currentPath={Astro.url.pathname} base={base} client:load />
     <section class="page-hero about-hero">
       <p class="eyebrow">About 12Grapes</p>
       <h1>Care that follows the whole growing year.</h1>
@@ -57,6 +58,6 @@ const serviceGroups = [
         <a class="button button-primary" href="#estimate" data-estimate-open>Estimate your property</a>
       </div>
     </section>
-    <Footer currentPath={Astro.url.pathname} />
+    <Footer currentPath={Astro.url.pathname} base={base} />
   </main>
 </BaseLayout>

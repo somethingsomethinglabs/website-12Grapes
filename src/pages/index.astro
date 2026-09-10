@@ -12,12 +12,13 @@ const services = [
   { number: '05', title: 'Irrigation support', copy: 'On-ground help with irrigation checks, maintenance and vineyard water systems.' },
   { number: '06', title: 'Harvest support', copy: 'Extra capability when timing matters, including crop estimation and harvest work.' },
 ];
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 ---
 
 <BaseLayout>
   <main>
     <div class="hero-shell">
-      <Header currentPath={Astro.url.pathname} client:load />
+      <Header currentPath={Astro.url.pathname} base={base} client:load />
       <section class="hero">
         <div class="hero-copy">
           <p class="eyebrow">Vineyard services <span aria-hidden="true"></span> Gippsland, Victoria</p>
@@ -36,7 +37,7 @@ const services = [
           <div class="hero-photo"></div>
           <img
             class="tractor-cutout"
-            src="/tractor-cutout.png"
+            src={`${base}tractor-cutout.png`}
             alt="Green vineyard tractor fitted with dual-sided mechanical undervine equipment"
           />
           <div class="hero-equipment-note">
@@ -105,7 +106,7 @@ const services = [
         <p class="section-kicker">Why 12Grapes?</p>
         <h2>Twelve grapes.<br />Twelve months.</h2>
         <p>The name reflects a simple belief. A successful harvest starts with consistent care throughout the year.</p>
-        <a class="line-link line-link-dark" href="/about">Our story <ArrowRight size={18} weight="regular" /></a>
+        <a class="line-link line-link-dark" href={`${base}about/`}>Our story <ArrowRight size={18} weight="regular" /></a>
       </div>
     </section>
 
@@ -118,6 +119,6 @@ const services = [
         <a class="contact-phone" href="tel:0427551508">0427 551 508</a>
       </div>
     </section>
-    <Footer currentPath={Astro.url.pathname} />
+    <Footer currentPath={Astro.url.pathname} base={base} />
   </main>
 </BaseLayout>
