@@ -3,14 +3,15 @@ import { ArrowDown, ArrowRight, ArrowUpRight } from 'phosphor-svelte';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.svelte';
+import ServiceDetails from '../components/ServiceDetails.svelte';
 
 const services = [
-  { number: '01', title: 'Ground management', copy: 'Mechanical undervine mowing and cultivation with herbicide-free options.', estimateService: 'mowing' },
-  { number: '02', title: 'Pruning & training', copy: 'Hands-on vine work to support structure, balance and productive growth.' },
-  { number: '03', title: 'Canopy management', copy: 'Seasonal canopy work to improve access, airflow and fruit-zone conditions.' },
-  { number: '04', title: 'Vineyard maintenance', copy: 'Practical support for vineyard upkeep, repairs and routine seasonal jobs.' },
-  { number: '05', title: 'Irrigation support', copy: 'On-ground help with irrigation checks, maintenance and vineyard water systems.' },
-  { number: '06', title: 'Harvest support', copy: 'Extra capability when timing matters, including crop estimation and harvest work.' },
+  { key: 'ground-management', number: '01', title: 'Ground management', copy: 'Mechanical undervine mowing and cultivation with herbicide-free options.' },
+  { key: 'pruning-training', number: '02', title: 'Pruning & training', copy: 'Hands-on vine work to support structure, balance and productive growth.' },
+  { key: 'canopy-management', number: '03', title: 'Canopy management', copy: 'Seasonal canopy work to improve access, airflow and fruit-zone conditions.' },
+  { key: 'vineyard-maintenance', number: '04', title: 'Vineyard maintenance', copy: 'Practical support for vineyard upkeep, repairs and routine seasonal jobs.' },
+  { key: 'irrigation-support', number: '05', title: 'Irrigation support', copy: 'On-ground help with irrigation checks, maintenance and vineyard water systems.' },
+  { key: 'harvest-support', number: '06', title: 'Harvest support', copy: 'Extra capability when timing matters, including crop estimation and harvest work.' },
 ];
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 const enquiryHref = (service: string) => `mailto:matmahlook@gmail.com?subject=${encodeURIComponent(`12Grapes enquiry - ${service}`)}&body=${encodeURIComponent(`Hi Mat,\n\nI would like to discuss ${service.toLowerCase()} for my vineyard.\n\nVineyard location:\nApproximate area:\nWhat I need help with:\n`)}`;
@@ -65,11 +66,9 @@ const enquiryHref = (service: string) => `mailto:matmahlook@gmail.com?subject=${
               <h3>{service.title}</h3>
               <p>{service.copy}</p>
             </div>
-            {service.estimateService ? (
-              <a href="#estimate" data-estimate-open data-estimate-service={service.estimateService} aria-label={`Get an estimate for ${service.title}`}><ArrowUpRight size={16} weight="bold" /></a>
-            ) : (
-              <a href={enquiryHref(service.title)} aria-label={`Email Mat about ${service.title}`}><ArrowUpRight size={16} weight="bold" /></a>
-            )}
+            <button type="button" class="service-card-trigger" data-service-open={service.key} aria-label={`Learn more about ${service.title}`}>
+              <span class="service-card-arrow" aria-hidden="true"><ArrowUpRight size={16} weight="bold" /></span>
+            </button>
           </article>
         ))}
       </div>
@@ -125,5 +124,6 @@ const enquiryHref = (service: string) => `mailto:matmahlook@gmail.com?subject=${
       </div>
     </section>
     <Footer currentPath={Astro.url.pathname} base={base} />
+    <ServiceDetails client:load />
   </main>
 </BaseLayout>
