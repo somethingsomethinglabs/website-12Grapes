@@ -44,7 +44,11 @@
 
 <header class="site-header">
   <a class="brand" href={base} aria-label="12Grapes home">
-    <img class="brand-logo" src={`${base}12grapes-logo.png`} alt="12Grapes Vineyard Services" />
+    <img class="brand-mark-image" src={`${base}12grapes-mark.png`} alt="" />
+    <span class="brand-copy" aria-hidden="true">
+      <span class="brand-wordmark">12Grapes</span>
+      <span class="brand-descriptor">Vineyard services</span>
+    </span>
   </a>
   <button
     bind:this={menuButton}
@@ -68,7 +72,7 @@
     <a href={`${base}about/`} aria-current={currentPath.replace(/\/$/, '') === `${base}about`.replace(/\/$/, '') ? 'page' : undefined} onclick={closeMenu}>About</a>
     <a href={`${base}#contact`} onclick={closeMenu}>Contact</a>
     <a class="nav-cta" href="#estimate" data-estimate-open onclick={closeMenu}>
-      Get a quote <span aria-hidden="true">↗</span>
+      Ground estimate <span aria-hidden="true">↗</span>
     </a>
   </nav>
 </header>

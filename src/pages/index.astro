@@ -5,7 +5,7 @@ import Footer from '../components/Footer.astro';
 import Header from '../components/Header.svelte';
 
 const services = [
-  { number: '01', title: 'Ground management', copy: 'Mechanical undervine mowing and cultivation with herbicide-free options.' },
+  { number: '01', title: 'Ground management', copy: 'Mechanical undervine mowing and cultivation with herbicide-free options.', estimateService: 'mowing' },
   { number: '02', title: 'Pruning & training', copy: 'Hands-on vine work to support structure, balance and productive growth.' },
   { number: '03', title: 'Canopy management', copy: 'Seasonal canopy work to improve access, airflow and fruit-zone conditions.' },
   { number: '04', title: 'Vineyard maintenance', copy: 'Practical support for vineyard upkeep, repairs and routine seasonal jobs.' },
@@ -13,6 +13,7 @@ const services = [
   { number: '06', title: 'Harvest support', copy: 'Extra capability when timing matters, including crop estimation and harvest work.' },
 ];
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const enquiryHref = (service: string) => `mailto:matmahlook@gmail.com?subject=${encodeURIComponent(`12Grapes enquiry - ${service}`)}&body=${encodeURIComponent(`Hi Mat,\n\nI would like to discuss ${service.toLowerCase()} for my vineyard.\n\nVineyard location:\nApproximate area:\nWhat I need help with:\n`)}`;
 ---
 
 <BaseLayout>
@@ -29,7 +30,7 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
           </p>
           <div class="hero-actions">
             <a class="button button-primary" href="#services">Explore our services <ArrowDown size={17} weight="bold" /></a>
-            <a class="hero-text-link" href="#estimate" data-estimate-open>Get an estimate <ArrowRight size={21} weight="regular" /></a>
+            <a class="hero-text-link" href="#estimate" data-estimate-open>Ground-management estimate <ArrowRight size={21} weight="regular" /></a>
           </div>
         </div>
 
@@ -64,7 +65,11 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
               <h3>{service.title}</h3>
               <p>{service.copy}</p>
             </div>
-            <a href="#estimate" data-estimate-open aria-label={`Request a quote for ${service.title}`}><ArrowUpRight size={16} weight="bold" /></a>
+            {service.estimateService ? (
+              <a href="#estimate" data-estimate-open data-estimate-service={service.estimateService} aria-label={`Get an estimate for ${service.title}`}><ArrowUpRight size={16} weight="bold" /></a>
+            ) : (
+              <a href={enquiryHref(service.title)} aria-label={`Email Mat about ${service.title}`}><ArrowUpRight size={16} weight="bold" /></a>
+            )}
           </article>
         ))}
       </div>
@@ -83,7 +88,7 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
           <div><span>02</span><p>Weed, sucker and trash disruption</p></div>
           <div><span>03</span><p>Support for snail and weevil control</p></div>
         </div>
-        <a class="line-link" href="#estimate" data-estimate-open>Discuss your vineyard <ArrowUpRight size={17} weight="bold" /></a>
+        <a class="line-link" href="#estimate" data-estimate-open data-estimate-service="weeding">Get a ground-management estimate <ArrowUpRight size={17} weight="bold" /></a>
       </div>
     </section>
 
@@ -115,7 +120,7 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
       <h2>Tell us what your vineyard needs.</h2>
       <p>Based in Gippsland and building a practical service around local growers.</p>
       <div class="contact-actions">
-        <a class="button button-primary" href="#estimate" data-estimate-open>Request a quote <ArrowUpRight size={17} weight="bold" /></a>
+        <a class="button button-primary" href={enquiryHref('vineyard services')}>Email Mat about your vineyard <ArrowUpRight size={17} weight="bold" /></a>
         <a class="contact-phone" href="tel:0427551508">0427 551 508</a>
       </div>
     </section>
