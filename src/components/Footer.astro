@@ -18,7 +18,7 @@ const { currentPath } = Astro.props;
       <a href="/#services">Services</a>
       <a href="/#ground-management">Ground management</a>
       <a href="/about" aria-current={currentPath === '/about' ? 'page' : undefined}>About 12Grapes</a>
-      <a href="/estimate" aria-current={currentPath === '/estimate' ? 'page' : undefined}>Request a quote</a>
+      <a href="#estimate" data-estimate-open>Request a quote</a>
       <a href="tel:0427551508">0427 551 508</a>
       <a href="mailto:matmahlook@gmail.com">matmahlook@gmail.com</a>
     </div>

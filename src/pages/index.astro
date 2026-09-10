@@ -28,7 +28,7 @@ const services = [
           </p>
           <div class="hero-actions">
             <a class="button button-primary" href="#services">Explore our services <ArrowDown size={17} weight="bold" /></a>
-            <a class="hero-text-link" href="/estimate">Get an estimate <ArrowRight size={21} weight="regular" /></a>
+            <a class="hero-text-link" href="#estimate" data-estimate-open>Get an estimate <ArrowRight size={21} weight="regular" /></a>
           </div>
         </div>
 
@@ -63,7 +63,7 @@ const services = [
               <h3>{service.title}</h3>
               <p>{service.copy}</p>
             </div>
-            <a href="/estimate" aria-label={`Request a quote for ${service.title}`}><ArrowUpRight size={16} weight="bold" /></a>
+            <a href="#estimate" data-estimate-open aria-label={`Request a quote for ${service.title}`}><ArrowUpRight size={16} weight="bold" /></a>
           </article>
         ))}
       </div>
@@ -82,7 +82,7 @@ const services = [
           <div><span>02</span><p>Weed, sucker and trash disruption</p></div>
           <div><span>03</span><p>Support for snail and weevil control</p></div>
         </div>
-        <a class="line-link" href="/estimate">Discuss your vineyard <ArrowUpRight size={17} weight="bold" /></a>
+        <a class="line-link" href="#estimate" data-estimate-open>Discuss your vineyard <ArrowUpRight size={17} weight="bold" /></a>
       </div>
     </section>
 
@@ -114,7 +114,7 @@ const services = [
       <h2>Tell us what your vineyard needs.</h2>
       <p>Based in Gippsland and building a practical service around local growers.</p>
       <div class="contact-actions">
-        <a class="button button-primary" href="/estimate">Request a quote <ArrowUpRight size={17} weight="bold" /></a>
+        <a class="button button-primary" href="#estimate" data-estimate-open>Request a quote <ArrowUpRight size={17} weight="bold" /></a>
         <a class="contact-phone" href="tel:0427551508">0427 551 508</a>
       </div>
     </section>

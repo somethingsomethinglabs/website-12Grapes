@@ -66,7 +66,7 @@
     <a href="/#ground-management" onclick={closeMenu}>Ground management</a>
     <a href="/about" aria-current={currentPath === '/about' ? 'page' : undefined} onclick={closeMenu}>About</a>
     <a href="/#contact" onclick={closeMenu}>Contact</a>
-    <a class="nav-cta" href="/estimate" aria-current={currentPath === '/estimate' ? 'page' : undefined} onclick={closeMenu}>
+    <a class="nav-cta" href="#estimate" data-estimate-open onclick={closeMenu}>
       Get a quote <span aria-hidden="true">↗</span>
     </a>
   </nav>

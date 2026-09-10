@@ -3,6 +3,7 @@ import '@fontsource-variable/dm-sans';
 import '@fontsource-variable/bodoni-moda';
 import '@fontsource/libre-baskerville/400.css';
 import '@fontsource/libre-baskerville/700.css';
+import Estimator from '../components/Estimator.svelte';
 import '../styles/global.css';
 
 interface Props {
@@ -45,5 +46,6 @@ const socialImage = new URL('/og.png', Astro.site);
   </head>
   <body>
     <slot />
+    <Estimator client:load />
   </body>
 </html>

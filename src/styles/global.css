@@ -160,12 +160,6 @@ input:focus { border-color: var(--forest); box-shadow: 0 0 0 3px rgba(35,79,57,.
 .summary-lines small { color: #9eb0a3; }
 .summary-button { width: 100%; margin-top: 8px; text-align: center; }
 .summary-note { margin: 20px 0 0; color: #c1cec4; font-size: 12px; line-height: 1.6; }
-.assumptions-section { margin-top: 90px; padding: 100px max(20px, calc((100vw - 1180px) / 2)); background: #eee8d9; }
-.assumptions-section h2 { max-width: 700px; }
-.assumption-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 35px; margin-top: 45px; }
-.assumption-grid article { border-top: 1px solid #c9c1ae; padding-top: 20px; }
-.assumption-grid p { color: var(--muted); line-height: 1.65; }
-
 .footer { margin-top: 120px; padding: 70px max(20px, calc((100vw - 1180px) / 2)) 28px; background: #0d2518; color: white; }
 .footer-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
 .footer-brand .brand-mark { background: var(--cream); color: var(--wine); }
@@ -173,20 +167,12 @@ input:focus { border-color: var(--forest); box-shadow: 0 0 0 3px rgba(35,79,57,.
 .footer-links { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 30px; justify-self: end; }
 .footer-links a, .footer-links span { color: #dbe3dd; font-size: 14px; }
 .summary-button { border: 0; cursor: pointer; }
-.prepared-enquiry { width: min(1180px, calc(100% - 40px)); margin: 70px auto 0; display: grid; grid-template-columns: .75fr 1.25fr; gap: 70px; padding: 48px; border: 1px solid #cfd6cc; border-radius: 22px; background: white; }
-.prepared-enquiry h2 { font-size: clamp(34px, 4vw, 52px); }
-.prepared-enquiry > div:first-child > p:last-child { color: var(--muted); line-height: 1.65; }
-.prepared-enquiry textarea { width: 100%; min-height: 280px; resize: vertical; padding: 18px; border: 1px solid #cdd4cc; border-radius: 13px; background: #f7f7f0; color: var(--ink); font: 13px/1.55 var(--font-sans), sans-serif; }
-.prepared-enquiry:focus { outline: none; }
-.prepared-enquiry .button { margin-top: 14px; border: 0; cursor: pointer; }
-.copy-status { margin: 10px 0 0; color: var(--forest); font-size: 12px; font-weight: 700; }
 .form-error { margin: 16px 0 0; color: var(--wine); font-size: 13px; font-weight: 750; line-height: 1.45; }
 .contact-grid input[aria-invalid='true'] { border-color: var(--wine); box-shadow: 0 0 0 3px rgba(122,38,58,.1); }
 .service-plan:focus { outline: 3px solid var(--wine); outline-offset: 4px; }
 .calculator-shell button:focus-visible,
 .calculator-shell input:focus-visible,
-.prepared-enquiry button:focus-visible,
-.prepared-enquiry textarea:focus-visible {
+.summary-button:focus-visible {
   outline: 3px solid var(--wine);
   outline-offset: 3px;
 }
@@ -218,8 +204,7 @@ input:focus { border-color: var(--forest); box-shadow: 0 0 0 3px rgba(35,79,57,.
   .service-ribbon p:nth-child(2) { border-right: 0; }
   .section { padding: 80px 0; }
   .concept-image { min-height: 390px; }
-  .benefit-list, .estimate-callout, .service-group-grid, .labour-grid, .contact-grid, .assumption-grid, .footer-inner, .prepared-enquiry { grid-template-columns: 1fr; }
-  .prepared-enquiry { gap: 25px; padding: 28px; }
+  .benefit-list, .estimate-callout, .service-group-grid, .labour-grid, .contact-grid, .footer-inner { grid-template-columns: 1fr; }
   .service-group-grid article, .service-group-grid article:first-child { padding: 28px 0; border-right: 0; border-bottom: 1px solid rgba(255,255,255,.16); }
   .service-group-grid article:last-child { border: 0; }
   .group-number { margin-bottom: 22px; }
@@ -513,4 +498,42 @@ main > astro-island > .site-header .brand {
   .detailed-row > label:first-child span { min-width: 0; }
   .passes { width: 100%; flex-direction: row; justify-content: space-between; align-items: center; border-top: 1px solid var(--line); padding-top: 12px; }
   .passes input { width: 88px; }
+}
+
+/* Estimate modal */
+body.modal-open { overflow: hidden; }
+.estimate-modal { width: min(1080px, calc(100% - 32px)); max-width: none; max-height: calc(100dvh - 32px); margin: auto; border: 0; border-radius: 22px; padding: 0; overflow: auto; background: var(--paper); color: var(--ink); box-shadow: 0 34px 100px rgba(7,18,11,.4); }
+.estimate-modal::backdrop { background: rgba(7,18,11,.74); backdrop-filter: blur(7px); }
+.estimate-modal-panel { min-height: 100%; }
+.estimate-modal-header { position: sticky; z-index: 6; top: 0; display: flex; align-items: flex-start; justify-content: space-between; gap: 28px; border-bottom: 1px solid var(--line); padding: 28px 34px 25px; background: rgba(251,248,239,.96); backdrop-filter: blur(12px); }
+.estimate-modal-header h2 { margin: 8px 0 7px; font-size: clamp(30px, 4vw, 46px); }
+.estimate-modal-header > div > p:last-child { max-width: 630px; margin: 0; color: var(--muted); font-size: 14px; line-height: 1.55; }
+.modal-close { flex: 0 0 auto; width: 46px; height: 46px; display: grid; place-items: center; border: 1px solid #bfc7bd; border-radius: 50%; background: transparent; color: var(--ink); font-size: 31px; font-weight: 300; line-height: 1; cursor: pointer; }
+.modal-close:hover { border-color: var(--wine); color: var(--wine); }
+.modal-close:focus-visible { outline: 3px solid var(--wine); outline-offset: 3px; }
+.estimate-modal .calculator-shell { width: auto; margin: 0; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; padding: 26px 34px 38px; }
+.estimate-modal .field-block { margin-top: 17px; padding: 22px; border-radius: 15px; background: rgba(255,255,255,.72); }
+.estimate-modal .field-heading { margin-bottom: 20px; }
+.estimate-modal .option-card { min-height: 155px; padding: 17px; }
+.estimate-modal .estimate-summary { top: 118px; border-radius: 16px; padding: 27px; }
+.estimate-modal .summary-total { padding: 22px 0; }
+.estimate-modal .summary-total strong { font-size: 47px; }
+.estimate-assumptions { margin-top: 17px; border-top: 1px solid var(--line); padding: 17px 4px 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
+.estimate-assumptions summary { color: var(--ink); font-weight: 750; cursor: pointer; }
+.estimate-assumptions p { margin: 10px 0 0; }
+
+@media (max-width: 900px) {
+  .estimate-modal .calculator-shell { grid-template-columns: 1fr; }
+  .estimate-modal .estimate-summary { position: static; }
+}
+
+@media (max-width: 680px) {
+  .estimate-modal { width: 100%; max-height: 100dvh; border-radius: 0; }
+  .estimate-modal-header { gap: 16px; padding: 22px 18px 19px; }
+  .estimate-modal-header h2 { font-size: 31px; }
+  .estimate-modal-header > div > p:last-child { font-size: 13px; }
+  .modal-close { width: 42px; height: 42px; }
+  .estimate-modal .calculator-shell { margin: 0; padding: 19px 17px 28px; }
+  .estimate-modal .field-block { padding: 19px; }
+  .estimate-modal .estimate-summary { padding: 24px; }
 }
